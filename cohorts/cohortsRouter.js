@@ -48,4 +48,17 @@ router.get('/:id/students', (req, res) => {
     .catch(err => res.status(500).json({errorMessage: 'Could not retrieve the students for the cohort with the specified id', error: err}));
 })
 
+router.put('/:id', (req, res) => {
+  db('cohorts').where({id: req.params.id}).update(req.body)
+    .then(count => {
+      if(count > 0) {
+        db('cohorts').where({id: req.params.id}).first()
+          .then(cohort => res.status(200).json(cohort))
+          .catch(err => res.status(500).json({errorMessage: 'Could not retrieve the updated cohort at this time', error: err}));
+      } else {
+        res.status(404).json({errorMessage: 'Cohort with the specified id not found.'})
+      }
+    })
+})
+
 module.exports = router;
