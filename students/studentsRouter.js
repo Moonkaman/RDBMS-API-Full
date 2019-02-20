@@ -24,4 +24,16 @@ router.post('/', (req, res) => {
   }
 })
 
+router.get('/:id', (req, res) => {
+  db.select('students.id', 'students.name as studentName', 'cohorts.name as cohort').from('students').innerJoin('cohorts', 'students.cohort_id', 'cohorts.id').where({'students.id': req.params.id})
+    .then(student => {
+      if(student) {
+        res.status(200).json(student);
+      } else {
+        res.status(404).json({errorMessage: 'The student with the specified id could not be found'});
+      }
+    })
+    .catch(err => res.status(500).json({errorMessage: 'Could not retrieve the student with the specified id at this time', error: err}));
+})
+
 module.exports = router;
