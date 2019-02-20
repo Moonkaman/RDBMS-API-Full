@@ -49,16 +49,21 @@ router.get('/:id/students', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  db('cohorts').where({id: req.params.id}).update(req.body)
-    .then(count => {
-      if(count > 0) {
-        db('cohorts').where({id: req.params.id}).first()
-          .then(cohort => res.status(200).json(cohort))
-          .catch(err => res.status(500).json({errorMessage: 'Could not retrieve the updated cohort at this time', error: err}));
-      } else {
-        res.status(404).json({errorMessage: 'Cohort with the specified id not found.'})
-      }
-    })
+  if(req.body.name) {
+    db('cohorts').where({id: req.params.id}).update(req.body)
+      .then(count => {
+        if(count > 0) {
+          db('cohorts').where({id: req.params.id}).first()
+            .then(cohort => res.status(200).json(cohort))
+            .catch(err => res.status(500).json({errorMessage: 'Could not retrieve the updated cohort at this time', error: err}));
+        } else {
+          res.status(404).json({errorMessage: 'Cohort with the specified id not found.'})
+        }
+      })
+      .catch(err => res.status(500).json({errorMessage: 'Could not update the cohort with the specified id', error: err}));
+  } else {
+    res.status(400).json({errorMessage: 'Please provide a name with the request'});
+  }
 })
 
 router.delete('/:id', (req, res) => {
