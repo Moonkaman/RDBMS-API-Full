@@ -5,13 +5,13 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('students').insert([
-        {colName: 'Nick', cohort_id: 2},
-        {colName: 'Orlando', cohort_id: 2},
-        {colName: 'Nathan', cohort_id: 2},
-        {colName: 'Johnathan', cohort_id: 1},
-        {colName: 'Alexander', cohort_id: 1},
-        {colName: 'Omar', cohort_id: 1},
-        {colName: 'Wesley', cohort_id: 3}
+        {name: 'Nick', cohort_id: 2},
+        {name: 'Orlando', cohort_id: 2},
+        {name: 'Nathan', cohort_id: 2},
+        {name: 'Johnathan', cohort_id: 1},
+        {name: 'Alexander', cohort_id: 1},
+        {name: 'Omar', cohort_id: 1},
+        {name: 'Wesley', cohort_id: 3}
       ]);
     });
 };
