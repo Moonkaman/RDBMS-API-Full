@@ -1,11 +1,6 @@
 const express = require('express');
-const knex = require('knex');
 const helmet = require('helmet');
 const morgan = require('morgan');
-
-const knexConfig = require('./knexfile');
-
-const db = knex(knexConfig.development);
 
 const server = express();
 
